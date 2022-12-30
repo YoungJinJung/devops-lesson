@@ -1,0 +1,24 @@
+service: rds-scheduler
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: go1.x
+  region: ap-northeast-2
+  stage: dev
+  iam:
+    role: #iam role arn
+
+
+package:
+  patterns:
+    - '!./**'
+    - ./bin/**
+
+functions:
+  rds-scheduler:
+    handler: bin/rds-scheduler
+    events:
+      - httpApi:
+          path: /stoprds
+          method: get
