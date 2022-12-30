@@ -1,4 +1,4 @@
-module github.com/YoungJinJung/cli-example
+module github.com/YoungJinJung/devops-lesson/cli-example
 
 go 1.19
 
