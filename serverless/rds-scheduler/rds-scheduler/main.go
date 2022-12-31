@@ -5,7 +5,6 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/rds"
 )
 
 const (
@@ -15,7 +14,8 @@ const (
 type Response events.APIGatewayProxyResponse
 
 var awsSeesion *session.Session
-var DBList = []string{"test"}
+
+//var DBList = []string{"test"}
 
 func getAwsSession() *session.Session {
 	if awsSeesion == nil {
@@ -25,18 +25,9 @@ func getAwsSession() *session.Session {
 }
 
 func stopRDS(session *session.Session) error {
-	svc := rds.New(session)
-	for _, db := range DBList {
-		input := &rds.StopDBInstanceInput{
-			DBInstanceIdentifier: aws.String(db),
-		}
+	//connect to rds
 
-		_, err := svc.StopDBInstance(input)
-
-		if err != nil {
-			return err
-		}
-	}
+	//stop rds instacne or cluster
 
 	return nil
 }
