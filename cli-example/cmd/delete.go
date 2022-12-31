@@ -7,8 +7,6 @@ package cmd
 import (
 	"fmt"
 
-	manager "github.com/YoungJinJung/devops-lesson/cli-example/pkg"
-
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +18,6 @@ var deleteCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		key, _ := cmd.Flags().GetString("key")
 		fmt.Printf("\n\n    **** Deleting key: %s ****\n\n", key)
-		manager.DeleteKeyValuePair(key)
 	},
 }
 

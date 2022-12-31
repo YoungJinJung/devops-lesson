@@ -5,8 +5,6 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	manager "github.com/YoungJinJung/devops-lesson/cli-example/pkg"
-
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +18,6 @@ var addCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		key, _ := cmd.Flags().GetString("key")
 		value, _ := cmd.Flags().GetString("value")
-		manager.AddKeyValuePair(key, value)
 	},
 }
 

@@ -5,8 +5,6 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	manager "github.com/YoungJinJung/devops-lesson/cli-example/pkg"
-
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +19,6 @@ not exist then the passed in values are added to the application configuration f
 	Run: func(cmd *cobra.Command, args []string) {
 		key, _ := cmd.Flags().GetString("key")
 		value, _ := cmd.Flags().GetString("value")
-		manager.UpdateKeyValuePair(key, value)
 	},
 }
 
