@@ -5,7 +5,7 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
+	manager "github.com/YoungJinJung/devops-lesson/cli-example/pkg"
 
 	"github.com/spf13/cobra"
 )
@@ -13,28 +13,18 @@ import (
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "The 'update' subcommand will update a passed in key value pair for an existing set of data to the application configuration file.",
+	Long: `The 'update' subcommand updates a key value pair, if the key value pair already exists it is updated, if it does
+not exist then the passed in values are added to the application configuration file. For example:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+'<cmd> config add --key theKey --value "the new value which will be updated for this particular key value pair."'.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("update called")
+		key, _ := cmd.Flags().GetString("key")
+		value, _ := cmd.Flags().GetString("value")
+		manager.UpdateKeyValuePair(key, value)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(updateCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// updateCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

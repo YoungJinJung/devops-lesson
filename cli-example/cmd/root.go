@@ -49,6 +49,8 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().StringP("key", "k", "", "The key for the key value set to the configuration.")
+	rootCmd.PersistentFlags().StringP("value", "v", "", "The value for the key value set to the configuration.")
 }
 
 func initConfig() {
