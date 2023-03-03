@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: gaea-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

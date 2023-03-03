@@ -1,0 +1,29 @@
+server:
+  port: 8007
+
+spring:
+  application:
+    name: pluto-service
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080 #admin server url
+        instance:
+          name: Pluto Server #admin UI 에서 보여질 이름 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #노출시킬 endpoint, *는 전체 노출
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  file:
+    name: "pluto-service.log"
+  level:
+    org:
+      springframework:
+        web:
+          filter: DEBUG

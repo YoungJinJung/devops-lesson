@@ -1,0 +1,63 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: send-s3-to-cloudwatch
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: ap-northeast-2
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:GetObject"
+            - "logs:CreateLogStream"
+            - "logs:CreateLogGroup"
+            - "logs:DescribeLogStreams"
+            - "logs:PutLogEvents"
+          Resource: "*"
+  environment:
+    CloudWatch_LogGroup: "/aws/alb/access_log"
+    InputFormat: "alb"
+    OutputFormat: "json"
+
+plugins:
+  - serverless-python-requirements
+ 
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+
+package:
+  patterns:
+    - "!node_modules/**"
+    - "!package.json"
+
+functions:
+  lambda_handler:
+    handler: handler.lambda_handler
+    events:
+      - s3: 
+          bucket: alb-accesslog-sample-test
+          rules:
+            - prefix: prefix/AWSLogs/<account-id>/elasticloadbalancing/ap-northeast-2/
+          existing: true

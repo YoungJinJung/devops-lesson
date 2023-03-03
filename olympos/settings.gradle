@@ -1,0 +1,12 @@
+rootProject.name = 'olympos'
+include 'jupiter'
+include 'juno'
+include 'pluto'
+include 'minerva'
+include 'luna'
+include 'neptune'
+include 'ceres'
+include 'uranus'
+include 'aurora'
+include 'gaea'
+

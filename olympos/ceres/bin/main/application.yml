@@ -1,0 +1,69 @@
+server:
+  port: 8001
+
+aws:
+  secretsmanager:
+    enabled: false
+
+cloud:
+  aws:
+    auto:
+      static: false
+    region:
+      static: ap-northeast-2
+
+spring:
+  application:
+    name: ceres-service
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080 #admin server url
+        instance:
+          name: Ceres Server #admin UI 에서 보여질 이름 설정
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/client
+    username: testuser
+    password: testpass
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  jpa:
+    database: POSTGRESQL
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #노출시킬 endpoint, *는 전체 노출
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  file:
+    name: "ceres-service.log"
+  level:
+    org:
+      springframework:
+        web:
+          filter: DEBUG

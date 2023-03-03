@@ -1,0 +1,33 @@
+server:
+  port: 8008
+
+spring:
+  application:
+    name: uranus-service
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080 #admin server url
+        instance:
+          name: Uranus Server #admin UI 에서 보여질 이름 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" #노출시킬 endpoint, *는 전체 노출
+  endpoint:
+    health:
+      show-details: always
+request:
+  url: "localhost"
+  port: 8001
+  path: "/ceres/api/userinfo/{id}"
+
+logging:
+  file:
+    name: "uranus-service.log"
+  level:
+    org:
+      springframework:
+        web:
+          filter: DEBUG
