@@ -52,3 +52,13 @@ services:
       nofile:
         soft: 1024000
         hard: 1024000   
+  postgres:
+    image: postgres
+    container_name: ngrinder-test
+    restart: always
+    ports:
+      - "5440:5432"
+    environment:
+      - POSTGRES_DB=client
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpass

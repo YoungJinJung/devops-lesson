@@ -1,0 +1,64 @@
+# ceres-klocust.yaml kloucst config file
+namespace: default
+locustName: ceres
+
+configmap:
+  locustFilename: ceres-locustfile.py
+
+main:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 250m
+    memory: 512Mi
+  nodeSelector: {}
+#   env: dev
+#   app: locust
+  tolerations: []
+#   - key: "example-key"
+#     operator: "Exists"
+#     effect: "NoSchedule"
+  affinity: {}
+  labels: {}
+  annotations: {}
+
+worker:
+  count: 1
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 250m
+    memory: 512Mi
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  labels: {}
+  annotations: {}
+
+service:
+  port: 8089
+  labels: {}
+  annotations: {}
+    # For EKS on Fargate
+    #alb.ingress.kubernetes.io/target-type: ip
+
+
+# example of nginx ingress
+#ingress:
+#  class: nginx
+#  host: locust-ceres.example.com
+#  labels: {}
+#  annotations: {}
+
+# example of ALB example
+#ingress:
+#  class: alb
+#  host: locust-ceres.example.com
+#  alb:
+#    scheme: internal
+#    securityGroups: sg-abcd1234, sg-defg1234
+#    certificateARN: arn:aws:acm:ap-northeast-2:000:cerficiate/xxx-xxx-xxxx
+#  labels: {}
+#  annotations: {}
