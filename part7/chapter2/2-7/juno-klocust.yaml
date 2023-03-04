@@ -1,0 +1,43 @@
+# juno-klocust.yaml kloucst config file
+namespace: default
+locustName: juno
+
+configmap:
+  locustFilename: juno-locustfile.py
+
+main:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 250m
+    memory: 512Mi
+  nodeSelector: {}
+#   env: dev
+#   app: locust
+  tolerations: []
+#   - key: "example-key"
+#     operator: "Exists"
+#     effect: "NoSchedule"
+  affinity: {}
+  labels: {}
+  annotations: {}
+
+worker:
+  count: 1
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 250m
+    memory: 512Mi
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  labels: {}
+  annotations: {}
+
+service:
+  port: 8089
+  labels: {}
+  annotations: {}

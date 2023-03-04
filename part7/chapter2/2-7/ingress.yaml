@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: default
+  name: locust-main-juno
+  annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.org/proxy-connect-timeout: "30s"
+      nginx.org/proxy-read-timeout: "20s"
+      nginx.org/client-max-body-size: "4m"
+
+  labels:
+    app: locust-main-juno
+spec:
+  rules:
+  - http:
+      paths:
+        - pathType: Prefix
+          path: /
+          backend:
+            service:
+              name: locust-main-juno
+              port:
+                number: 8089
