@@ -69,11 +69,11 @@ class WebsiteTasks(TaskSet):
     # write your tasks ###################################################
     ######################################################################
     @task(60)
-    def index(self):
+    def getUserInfo(self):
         self.get("/ceres/api/userinfo/"+str(random.randrange(1,7)))
 
     @task(40)
-    def health(self):
+    def getServiceName(self):
         self.get("/ceres/api/serviceName")
 
 
