@@ -1,10 +1,16 @@
 #!/bin/bash
 
+sudo yum update -y
+
 echo "
 #### install cloudwatch-agent ####
 ...
 "
 sudo yum install amazon-cloudwatch-agent -y
+sudo amazon-linux-extras install nginx1 -y 
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
 echo "
 Success!
 "
@@ -16,114 +22,106 @@ echo "
 sudo touch /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
 sudo bash -c 'cat << EOF > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
 {
-   "agent": {
-        "metrics_collection_interval": 60,
-        "run_as_user": "root"
-        "region": "ap-northeast-2",
-        "logfile": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log",
-        "debug": false
-  },
-  "metrics": {
-    "namespace": "CWAgent",
+    "agent": {
+    "metrics_collection_interval": 10,
+    "logfile": "/opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log"
+    },
+    "metrics": {
+    "namespace": "MyCustomNamespace",
     "metrics_collected": {
-       "processes": {
-        "measurement": [
-          "running",
-          "sleeping",
-          "dead"
-        ]
-      },
-      "cpu": {
-        "measurement": [
-          "cpu_usage_idle",
-          "cpu_usage_iowait",
-          "cpu_usage_user",
-          "cpu_usage_system",
-          "cpu_time_idle",
-          "cpu_time_iowait",
-          "cpu_time_user",
-          "cpu_time_system"
-        ],
-        "metrics_collection_interval": 60,
+        "cpu": {
         "resources": [
-          "*"
+            "*"
         ],
-        "totalcpu": true
-      },
-      "disk": {
+        "measurement": [
+            "cpu_usage_idle",
+            "cpu_usage_iowait",
+            "cpu_usage_user",
+            "cpu_usage_system",
+            "cpu_time_idle",
+            "cpu_time_iowait",
+            "cpu_time_user",
+            "cpu_time_system"
+        ],
+        "totalcpu": true,
+        "metrics_collection_interval": 10
+        },
+        "disk": {
+        "resources": [
+            "/",
+            "/tmp"
+        ],
         "measurement": [
           "inodes_free",
           "used_percent",
           "used",
           "total"
         ],
-        "metrics_collection_interval": 60,
-        "resources": [
-          "*"
-        ]
-      },
-      "diskio": {
-        "measurement": [
-          "io_time",
-          "write_bytes",
-          "read_bytes",
-          "writes",
-          "reads"
-        ],
-        "metrics_collection_interval": 60,
-        "resources": [
-          "*"
-        ]
-      },
-      "mem": {
-        "measurement": [
-          "mem_used_percent",
-          "mem_total",
-          "mem_used",
-          "mem_cached",
-          "mem_free",
-          "mem_inactive"
-        ],
-        "metrics_collection_interval": 10
-      },
-      "netstat": {
-        "measurement": [
-          "tcp_established",
-          "tcp_time_wait"
+            "ignore_file_system_types": [
+            "sysfs", "devtmpfs"
         ],
         "metrics_collection_interval": 60
-      },
-      "swap": {
+        },
+        "diskio": {
+        "resources": [
+            "*"
+        ],
         "measurement": [
-          "swap_used_percent"
+            "reads",
+            "writes",
+            "read_time",
+            "write_time",
+            "io_time"
         ],
         "metrics_collection_interval": 60
-      }
+        },
+        "swap": {
+        "measurement": [
+            "swap_used",
+            "swap_free",
+            "swap_used_percent"
+        ]
+        },
+        "mem": {
+        "measurement": [
+            "mem_used",
+            "mem_cached",
+            "mem_total"
+        ],
+        "metrics_collection_interval": 1
+        },
+        "net": {
+        "resources": [
+            "eth0"
+        ],
+        "measurement": [
+            "bytes_sent",
+            "bytes_recv",
+            "drop_in",
+            "drop_out"
+        ]
+        },
+        "netstat": {
+        "measurement": [
+            "tcp_established",
+            "tcp_syn_sent",
+            "tcp_close"
+        ],
+        "metrics_collection_interval": 60
+        },
+        "processes": {
+        "measurement": [
+            "running",
+            "sleeping",
+            "dead"
+        ]
+        }
     },
-    "append_dimensions": {
-      "ImageId": "${aws:ImageId}",
-      "InstanceId": "${aws:InstanceId}",
-      "InstanceType": "${aws:InstanceType}",
-      "AutoScalingGroupName": "${aws:AutoScalingGroupName}"
+    "force_flush_interval" : 30
     },
-    "aggregation_dimensions": [
-      [
-        "ImageId"
-      ],
-      [
-        "InstanceId",
-        "InstanceType"
-      ],
-      [
-        "d1"
-      ],
-      []
-    ],
-    "force_flush_interval": 30
-  },
-  "logs": {
+    "logs": {
     "logs_collected": {
-      "files": {
+        "files": {
         "collect_list": [
           {
             "file_path": "/var/log/messages",
@@ -136,13 +134,25 @@ sudo bash -c 'cat << EOF > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatc
             "log_group_name": "/aws/ec2/var/log/secure",
             "log_stream_name": "{instance_id}",
             "auto_removal": false
+          },
+          {
+            "file_path": "/var/log/nginx/access.log",
+            "log_group_name": "/aws/ec2/var/log/nginx/access",
+            "log_stream_name": "{instance_id}",
+            "auto_removal": false
+          },
+          {
+            "file_path": "/var/log/nginx/error.log",
+            "log_group_name": "/aws/ec2/var/log/nginx/error",
+            "log_stream_name": "{instance_id}",
+            "auto_removal": false
           }
         ]
-      }
+        }
     },
-    "log_stream_name": "ec2_log_stream",
-    "force_flush_interval": 15
-  }
+    "log_stream_name": "my_log_stream_name",
+    "force_flush_interval" : 15
+    }
 }
 EOF'
 
