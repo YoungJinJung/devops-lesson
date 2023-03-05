@@ -68,9 +68,13 @@ class WebsiteTasks(TaskSet):
     ######################################################################
     # write your tasks ###################################################
     ######################################################################
+    @task(60)
+    def getUserInfo(self):
+        self.get("/ceres/api/userinfo/"+str(random.randrange(1,12)))
+
     @task(40)
     def getServiceName(self):
-        self.get("/juno/api/serviceName")
+        self.get("/ceres/api/serviceName")
 
 
 class WebsiteUser(HttpUser):
@@ -81,4 +85,4 @@ class WebsiteUser(HttpUser):
     wait_time = between(1, 2)
 
     # default target host
-    host = "http://192.168.120.109:8002"
+    host = "http://192.168.120.109:8001"
