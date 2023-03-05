@@ -51,6 +51,7 @@ package:
   patterns:
     - "!node_modules/**"
     - "!package.json"
+    - "!s3.policy.json"
 
 functions:
   lambda_handler:
@@ -59,5 +60,5 @@ functions:
       - s3: 
           bucket: alb-accesslog-sample-test
           rules:
-            - prefix: prefix/AWSLogs/<account-id>/elasticloadbalancing/ap-northeast-2/
+            - prefix: prefix/AWSLogs/<account/elasticloadbalancing/ap-northeast-2/
           existing: true
