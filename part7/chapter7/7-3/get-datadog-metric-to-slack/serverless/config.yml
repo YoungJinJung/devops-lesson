@@ -1,0 +1,6 @@
+- metric_name: "System Cpu User"
+  metric_query: "avg:aws.ec2.cpuutilization{name:chap7-2}"
+  graph_def: ""
+  title: "System Cpu User"
+  width: 500
+  height: 300

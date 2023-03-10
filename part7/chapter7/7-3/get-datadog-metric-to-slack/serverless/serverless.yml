@@ -1,0 +1,48 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: get-datadog-metric-to-s3
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  memorySize: 256
+  runtime: go1.x
+  region: ap-northeast-2
+  stage: ${opt:stage, 'dev'}
+  role: ${self:custom.role.${opt:stage}}
+
+package:
+  patterns:
+    - "!./**"
+    - ./bin/**
+    - config.yml
+    - ./*.json
+
+custom:
+  role:
+    dev: <iam-role-arn>
+
+functions:
+  get-datadog-metric-to-dynamo:
+    handler: bin/get-datadog-metric-to-dynamo
+    events:
+      - schedule: rate(2 minutes)
+
+  send-msg-to-slack:
+    handler: bin/send-msg-to-slack
+    events:
+      - http:
+          path: metrics
+          method: post
