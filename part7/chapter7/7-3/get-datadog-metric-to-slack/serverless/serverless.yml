@@ -34,7 +34,7 @@ package:
 
 custom:
   role:
-    dev: arn:aws:iam::816736805842:role/lambda-datadog-metric-to-slack
+    dev: arn:aws:iam::<account-id>:role/lambda-datadog-metric-to-slack
 
 functions:
   get-datadog-metric-to-dynamo:
