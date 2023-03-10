@@ -24,7 +24,7 @@ const (
 	TableName      = "datadog-metrics"
 	ConfigFileName = "config.yml"
 	ChannelId      = "" //user channel id
-	TokenName = "DATADOGBOT_SLACK_TOKEN"
+	TokenName      = "DATADOGBOT_SLACK_TOKEN"
 )
 
 var awsSession *session.Session

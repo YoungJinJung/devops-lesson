@@ -22,6 +22,8 @@ provider:
   region: ap-northeast-2
   stage: ${opt:stage, 'dev'}
   role: ${self:custom.role.${opt:stage}}
+  environment:
+    DD_SITE: "us3.datadoghq.com"
 
 package:
   patterns:
@@ -32,7 +34,7 @@ package:
 
 custom:
   role:
-    dev: <iam-role-arn>
+    dev: arn:aws:iam::816736805842:role/lambda-datadog-metric-to-slack
 
 functions:
   get-datadog-metric-to-dynamo:
