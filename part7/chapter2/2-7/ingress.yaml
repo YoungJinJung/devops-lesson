@@ -8,7 +8,6 @@ metadata:
       nginx.org/proxy-connect-timeout: "30s"
       nginx.org/proxy-read-timeout: "20s"
       nginx.org/client-max-body-size: "4m"
-
   labels:
     app: locust-main-ceres
 spec:

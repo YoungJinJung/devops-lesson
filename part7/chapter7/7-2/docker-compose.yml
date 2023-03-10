@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres
+    container_name: test-db
+    restart: always
+    ports:
+      - "5440:5432"
+    environment:
+      - POSTGRES_DB=client
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpass

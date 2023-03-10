@@ -70,7 +70,7 @@ class WebsiteTasks(TaskSet):
     ######################################################################
     @task(60)
     def getUserInfo(self):
-        self.get("/ceres/api/userinfo/"+str(random.randrange(1,7)))
+        self.get("/ceres/api/userinfo/"+str(random.randrange(1,12)))
 
     @task(40)
     def getServiceName(self):
@@ -85,4 +85,4 @@ class WebsiteUser(HttpUser):
     wait_time = between(1, 2)
 
     # default target host
-    host = "http://192.168.120.109:8001"
+    host = "http://192.168.0.185:8001"

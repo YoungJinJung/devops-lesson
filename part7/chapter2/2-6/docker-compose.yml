@@ -14,3 +14,13 @@ services:
     volumes:
       - ./:/mnt/locust
     command: -f /mnt/locust/locustfile.py --worker --master-host master
+  postgres:
+    image: postgres
+    container_name: locust-db
+    restart: always
+    ports:
+      - "5440:5432"
+    environment:
+      - POSTGRES_DB=client
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpass
