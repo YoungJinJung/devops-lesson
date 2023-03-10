@@ -4,6 +4,16 @@ volumes:
   prometheus_data: {}
 
 services:
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - ./datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
