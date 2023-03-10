@@ -9,7 +9,7 @@ module "ec2_status" {
   #Notification message
   message = <<EOF
 >ec2 status check failed for last 1m, please check {{host.stack}} : {{host.name}} ({{host.ip}}) ({{host.instance-id}})
-@slack-your-slack-channel
+@slack-DevOps_Study-study
 EOF
 
   #RE-Notification message

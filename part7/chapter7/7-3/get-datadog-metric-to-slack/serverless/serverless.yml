@@ -23,7 +23,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   role: ${self:custom.role.${opt:stage}}
   environment:
-    DD_SITE: "us3.datadoghq.com"
+    DD_SITE: "datadoghq.com"
 
 package:
   patterns:

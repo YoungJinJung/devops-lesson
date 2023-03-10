@@ -10,8 +10,7 @@ module "cpu_usage" {
   #Notification message
   message = <<EOF
 >CPU usage is high for last 5m, please check {{host.env}} : {{host.name}} ({{host.ip}}) ({{host.instance-id}})
->Teleport endpoint is ```tsh ssh ec2-user@{{host.name}}-{{host.instance-id}}```
-@slack-your-slack-channel
+@slack-DevOps_Study-study
 EOF
 
   #RE-Notification message
