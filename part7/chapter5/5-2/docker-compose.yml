@@ -20,27 +20,6 @@ services:
     ports:
       - 9090:9090
       
-  postgres:
-    image: postgres
-    ports:
-      - 5432:5432
-    volumes:
-      - ./backup:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=client
-      - POSTGRES_USER=testuser
-      - POSTGRES_PASSWORD=testpass
-
-  postgres-exporter:
-    image: prometheuscommunity/postgres-exporter
-    ports:
-      - 9187:9187
-    environment:
-      DATA_SOURCE_NAME: "postgresql://testuser:testpass@postgres:5432/client?sslmode=disable"
-    links:
-      - postgres
-      - prometheus
-
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
     container_name: node-exporter
@@ -52,21 +31,42 @@ services:
     ports:
       - 9100:9100
 
-  nginx:
-    container_name: nginx
-    image: nginx:latest
-    ports:
-      - 8080:80
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./logs:/var/log/nginx
+  # postgres:
+  #   image: postgres
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - ./backup:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_DB=client
+  #     - POSTGRES_USER=testuser
+  #     - POSTGRES_PASSWORD=testpass
 
-  nginx-exporter:
-    image: nginx/nginx-prometheus-exporter
-    ports:
-     - 9113:9113
-    command:
-      - -nginx.scrape-uri
-      - http://nginx/metrics
-    depends_on:
-      - prometheus
+  # postgres-exporter:
+  #   image: prometheuscommunity/postgres-exporter
+  #   ports:
+  #     - 9187:9187
+  #   environment:
+  #     DATA_SOURCE_NAME: "postgresql://testuser:testpass@postgres:5432/client?sslmode=disable"
+  #   links:
+  #     - postgres
+  #     - prometheus
+
+  # nginx:
+  #   container_name: nginx
+  #   image: nginx:latest
+  #   ports:
+  #     - 8080:80
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  #     - ./logs:/var/log/nginx
+
+  # nginx-exporter:
+  #   image: nginx/nginx-prometheus-exporter
+  #   ports:
+  #    - 9113:9113
+  #   command:
+  #     - -nginx.scrape-uri
+  #     - http://nginx/metrics
+  #   depends_on:
+  #     - prometheus

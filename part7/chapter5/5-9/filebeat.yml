@@ -1,0 +1,23 @@
+filebeat.config.modules:
+  enabled: true
+  reload.enabled: false
+  reload.period: 10s
+  path: ${path.config}/modules.d/*.yml
+
+filebeat.inputs:
+- type: filestream
+  paths:
+    - /var/log/nginx/*.log
+  fields:
+    nginx: true
+
+# setup:
+#   kibana:
+#     host: "http://kibana:5601"
+#   dashboards:
+#     enabled: true
+
+output:
+  logstash:
+    enabled: true
+    hosts: ["logstash:5044"]

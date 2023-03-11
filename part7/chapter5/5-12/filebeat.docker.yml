@@ -1,8 +1,0 @@
-filebeat.inputs:
-- type: filestream
-  id: application-log
-  paths:
-    - /olympos/*.log
-
-output.logstash:
-  hosts: ["127.0.0.1:5044"]
