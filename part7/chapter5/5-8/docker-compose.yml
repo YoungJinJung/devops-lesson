@@ -63,15 +63,15 @@ services:
     volumes:
       - data03:/usr/share/elasticsearch/data
 
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:8.6.2
-  #   container_name: kibana
-  #   ports:
-  #     - "5601:5601"
-  #   volumes:
-  #     - ./kibana.yml:/usr/share/kibana/config/kibana.yml
-  #   environment:
-  #     NODE_OPTIONS: "--max-old-space-size=2048"
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.6.2
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=2048"
 
 volumes:
   data01:
